@@ -1,47 +1,65 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>Textification</title>
 
         <link rel="icon" href="/icons/logo.png">
         <link rel="stylesheet" href="/css/styles.css">
+
+        <script type="module" src="/js/recording.js"></script>
     </head>
 
     <body>
-        <!-- What's going on gangsta!! -->
 
         <header>
-		</header>
+            <img class="icon" src="/icons/logo.png" alt="Textification logo">
+            <h1>Textification</h1>
+        </header>
 
-        <main>
-            <audio id="click-sound" src="/sounds/button-sound.mp3" preload="auto">
-            </audio>
+        <main class="wrapper">
 
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-			
-            <button id="sound-button">Click Me</button>
+            <section class="recording-panel">
 
-            <script>
-                const button = document.getElementById('sound-button');
-                const sound = document.getElementById('click-sound');
+                <div id="sound-visualiser" class="hud-visualiser">
 
-                button.addEventListener('click', () => {
-                    sound.currentTime = 0;
-                    sound.play();
-                });
-            </script>
-			
+                    <div class="hud-header">
+                        <span>MIC INPUT // ANALYSIS</span>
+                        <span id="recording-indicator">STANDBY</span>
+                    </div>
+
+                    <canvas id="audio-canvas" width="900" height="260" aria-label="Live microphone waveform">
+                    </canvas>
+
+                </div>
+
+                <p id="recording-status" aria-live="polite">
+                    Ready to record
+                </p>
+
+                <div class="recording-controls">
+                    <button id="record-button" type="button">
+                        Start recording
+                    </button>
+                </div>
+
+                <section class="transcription-section">
+                    <h2>Transcription</h2>
+
+                    <output id="transcription-output">
+                        Your transcription will appear here.
+                    </output>
+                </section>
+
+            </section>
+
         </main>
 
         <footer>
-            <p class="footer-text">hello this is my legal compliance policy type shit</p>
+            <p class="footer-text">Textification speech-to-text application</p>
         </footer>
 
     </body>

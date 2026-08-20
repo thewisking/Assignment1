@@ -111,3 +111,39 @@ img {
 
 li::marker { content: "•   "; }
 
+.recording-panel {
+    text-align: center;
+    padding-block: 4rem;
+}
+
+.sound-visualiser {
+    min-height: 14rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sound-circle {
+    width: 10rem;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #d8ffff 0%,
+            #55e5f2 12%,
+            #8a5cff 45%,
+            #1a1740 75%
+        );
+
+    box-shadow:
+        0 0 2rem rgba(85, 229, 242, 0.7),
+        0 0 5rem rgba(138, 92, 255, 0.5),
+        inset -1rem -1rem 2rem rgba(0, 0, 0, 0.4);
+
+    transform: scale(1);
+    transition: transform 0.07s linear;
+}
