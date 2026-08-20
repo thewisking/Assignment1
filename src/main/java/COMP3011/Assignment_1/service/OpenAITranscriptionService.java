@@ -10,6 +10,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
 import COMP3011.Assignment_1.model.OpenAITranscriptionResponse;
+import COMP3011.Assignment_1.model.TranscriptionResult;
 
 @Service
 @Profile("titan")
@@ -30,7 +31,8 @@ public class OpenAITranscriptionService implements TranscriptionService {
     }
 
     @Override
-    public String transcribe(MultipartFile audioFile) {
+    public TranscriptionResult transcribe(MultipartFile audioFile) {
+
         MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
 
         bodyBuilder.part("file", audioFile.getResource());
@@ -52,7 +54,18 @@ public class OpenAITranscriptionService implements TranscriptionService {
                         "OpenAI returned an empty transcription response.");
             }
 
-            return response.getText();
+            long inputTokens = 0;
+            long outputTokens = 0;
+
+            if (response.getUsage() != null) {
+                inputTokens = response.getUsage().getInputTokens();
+                outputTokens = response.getUsage().getOutputTokens();
+            }
+
+            return new TranscriptionResult(
+                    response.getText(),
+                    inputTokens,
+                    outputTokens);
 
         } catch (RestClientException exception) {
             throw new IllegalStateException(

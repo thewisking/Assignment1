@@ -2,8 +2,10 @@ package COMP3011.Assignment_1.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import COMP3011.Assignment_1.model.TranscriptionResult;
+
 public interface TranscriptionService {
 
-    String transcribe(MultipartFile audioFile);
+    TranscriptionResult transcribe(MultipartFile audioFile);
 
 }
