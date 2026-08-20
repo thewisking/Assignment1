@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-	
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speech to Text</title>
-</head>
 
-<body>
+<html>
 
-    <header>
-        <h1>Speech to Text</h1>
-		
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="record.html">Record</a>
-        </nav>
-    </header>
+    <head>
+        <title>Textification</title>
 
-    <main>
-        <section>
-            <h2>Turn your speech into text</h2>
+        <link rel="icon" href="/icons/logo.png">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
 
-            <p>
-                Record your voice and convert your speech into written text.
-            </p>
+    <body>
+        <!-- What's going on gangsta!! -->
 
-            <a href="record.html">Start recording</a>
-        </section>
+        <header>
+		</header>
 
-        <section>
-            <h2>How it works</h2>
+        <main>
+            <audio id="click-sound" src="/sounds/button-sound.mp3" preload="auto">
+            </audio>
 
-            <ol>
-                <li>Open the recording page.</li>
-                <li>Record your speech.</li>
-                <li>Convert the recording into text.</li>
-            </ol>
-        </section>
-    </main>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+			
+            <button id="sound-button">Click Me</button>
 
-    <footer>
-        <p>Speech to Text Application</p>
-    </footer>
+            <script>
+                const button = document.getElementById('sound-button');
+                const sound = document.getElementById('click-sound');
 
-</body>
+                button.addEventListener('click', () => {
+                    sound.currentTime = 0;
+                    sound.play();
+                });
+            </script>
+			
+        </main>
+
+        <footer>
+            <p class="footer-text">hello this is my legal compliance policy type shit</p>
+        </footer>
+
+    </body>
+
 </html>
