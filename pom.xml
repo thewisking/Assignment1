@@ -13,9 +13,9 @@
 	</parent>
 
 	<groupId>COMP3011</groupId>
-	<artifactId>Aissignment1</artifactId>
+	<artifactId>Assignment1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Aissignment1</name>
+	<name>Assignment1</name>
 
 	<description/>
 
@@ -67,7 +67,7 @@
 	</dependencies>
 
 	<build>
-	
+
 		<plugins>
 
 			<plugin>
