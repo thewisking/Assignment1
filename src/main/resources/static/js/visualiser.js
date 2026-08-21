@@ -5,7 +5,7 @@ let barValues;
 let peakValues;
 let animationFrameId;
 
-const barCount = 64;
+const barCount = 32;
 const barGap = 3;
 const frequencyScale = 2.1;
 
@@ -105,9 +105,6 @@ function drawGrid() {
 
     canvasContext.clearRect(0, 0, width, height);
 
-    canvasContext.fillStyle = "rgba(4, 10, 24, 0.96)";
-    canvasContext.fillRect(0, 0, width, height);
-
     canvasContext.strokeStyle =
         "rgba(63, 220, 255, 0.10)";
 
@@ -139,79 +136,69 @@ function drawGrid() {
 function drawSpectrum() {
     const width = canvas.width;
     const height = canvas.height;
+    const centreX = width / 2;
     const centreY = height / 2;
     const maximumHeight = height * 0.42;
-
-    const totalGapWidth =
-        barGap * (barCount - 1);
-
-    const barWidth =
-        (width - totalGapWidth) / barCount;
-
-    const gradient =
-        canvasContext.createLinearGradient(
-            0,
-            0,
-            width,
-            0
-        );
-
-    gradient.addColorStop(0, "#3987ff");
-    gradient.addColorStop(0.5, "#9e54ff");
-    gradient.addColorStop(1, "#ff315f");
+    const availableWidth = width / 2;
+    const totalGapWidth = barGap * (barCount - 1);
+    const barWidth = (availableWidth - totalGapWidth) / barCount;
 
     canvasContext.save();
 
     for (let index = 0; index < barCount; index++) {
-        const x =
-            index * (barWidth + barGap);
+        const distanceFromCentre = index * (barWidth + barGap);
+        const leftX = centreX - barWidth - distanceFromCentre;
+        const rightX = centreX + distanceFromCentre;
+        const barHeight = Math.max(3, barValues[index] * maximumHeight);
+        const peakHeight = peakValues[index] * maximumHeight;
+        const colourProgress = index / (barCount - 1);
+        const lightness = 1000 + colourProgress * 20;
+        const colour = `hsl(0 100% ${lightness}%)`;
 
-        const barHeight =
-            Math.max(
-                3,
-                barValues[index] * maximumHeight
-            );
-
-        const peakHeight =
-            peakValues[index] * maximumHeight;
-
-        canvasContext.fillStyle = gradient;
-        canvasContext.shadowBlur = 9;
-        canvasContext.shadowColor = "#6b7dff";
-        canvasContext.globalAlpha = 0.9;
-
-        drawRoundedRectangle(
-            x,
-            centreY - barHeight,
-            barWidth,
-            barHeight,
-            3
-        );
-
-        canvasContext.globalAlpha = 0.18;
-        canvasContext.shadowBlur = 0;
-
-        drawRoundedRectangle(
-            x,
-            centreY,
-            barWidth,
-            barHeight * 0.45,
-            3
-        );
-
-        canvasContext.globalAlpha = 0.8;
-        canvasContext.fillStyle = "#d7faff";
-
-        drawRoundedRectangle(
-            x,
-            centreY - peakHeight - 2,
-            barWidth,
-            2,
-            1
-        );
+        drawSpectrumBar(leftX, centreY, barWidth, barHeight, peakHeight, colour);
+        drawSpectrumBar(rightX, centreY, barWidth, barHeight, peakHeight, colour);
     }
 
     canvasContext.restore();
+}
+
+function drawSpectrumBar(x, centreY, barWidth, barHeight, peakHeight, colour) {
+    canvasContext.fillStyle = colour;
+    canvasContext.shadowBlur = 9;
+    canvasContext.shadowColor = colour;
+    canvasContext.globalAlpha = 0.9;
+
+    drawRoundedRectangle(
+        x,
+        centreY - barHeight,
+        barWidth,
+        barHeight,
+        3
+    );
+
+    canvasContext.globalAlpha = 0.18;
+    canvasContext.shadowBlur = 0;
+
+    drawRoundedRectangle(
+        x,
+        centreY,
+        barWidth,
+        barHeight * 0.45,
+        3
+    );
+
+    canvasContext.globalAlpha = 0.8;
+    canvasContext.fillStyle = "#003cff";
+    canvasContext.shadowBlur = 6;
+    canvasContext.shadowColor = "#ffffff";
+
+    drawRoundedRectangle(
+        x,
+        centreY - peakHeight - 2,
+        barWidth,
+        2,
+        1
+    );
 }
 
 function drawRoundedRectangle(x, y, width, height, radius) {
